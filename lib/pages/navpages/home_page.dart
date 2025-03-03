@@ -11,6 +11,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+
+  var images = {
+    "balloning.png": "Balloning",
+    "hiking.png":"Hiking",
+    "kayaking.png": "Kayaking",
+    "snorkling.png": "Snorkling"
+  };
   @override
   Widget build(BuildContext context) {
     TabController tabController = TabController(length: 3, vsync: this);
@@ -18,6 +25,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // app bar bhanda muni ko
           Container(
             padding: const EdgeInsets.only(top: 70, left: 20),
             child: Row(
@@ -36,40 +44,42 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ],
             ),
           ),
-          SizedBox(height: 40),
+          SizedBox(height: 30),
           Container(
             margin: EdgeInsets.only(left: 20),
             child: AppLargeText(text: "Discover"),
           ),
-          SizedBox(height: 40),
-          Container(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: TabBar(
-                labelPadding: EdgeInsets.only(left: 20, right: 20),
-                labelColor: Colors.black,
-                unselectedLabelColor: Colors.grey,
-                isScrollable: true,
-                indicatorSize: TabBarIndicatorSize.label,
-                indicator: CircleTabIndicator(
-                  color: AppColors.mainColor,
-                  radius: 4,
-                ),
+          SizedBox(height: 20),
 
-                controller: tabController,
-
-                tabs: [
-                  Tab(text: "Places"),
-                  Tab(text: "Inspiration"),
-                  Tab(text: "Emotion"),
-                ],
+          // tala ko tab controller
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TabBar(
+              labelPadding: EdgeInsets.only(left: 20, right: 20),
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.grey,
+              isScrollable: true,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicator: CircleTabIndicator(
+                color: AppColors.mainColor,
+                radius: 4,
               ),
+
+              controller: tabController,
+
+              tabs: [
+                Tab(text: "Places"),
+                Tab(text: "Inspiration"),
+                Tab(text: "Emotion"),
+              ],
             ),
           ),
           Container(
             padding: EdgeInsets.only(left: 20),
             height: 300,
             width: double.maxFinite,
+
+            //scroll hune tab bar josle image dekhaucha
             child: TabBarView(
               controller: tabController,
 
@@ -83,7 +93,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       width: 200,
                       height: 300,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(40),
                         color: Colors.white,
                         image: DecorationImage(
                           image: AssetImage("img/mountain.jpeg"),
@@ -96,6 +106,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           ),
           SizedBox(height: 30),
+
+          // explore more ra see all walaa line
           Container(
             margin: EdgeInsets.only(right: 20, left: 20),
             child: Row(
@@ -104,57 +116,49 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 AppLargeText(text: "Explore more", size: 22),
                 AppLargeText(
                   text: "See all",
-                  size: 22,
+                  size: 16,
                   color: AppColors.textColor1,
                 ),
               ],
             ),
           ),
-          SizedBox(height: 30,),
+          SizedBox(height: 30),
+
+          //bottom nav bar bhanda mathi ko
           Container(
-            height: 100,
+            height: 130,
             width: double.maxFinite,
-            margin: EdgeInsets.only(left: 20),
+            margin: EdgeInsets.only(left: 30),
             child: ListView.builder(
               itemCount: 4,
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(left: 20),
-                      height: 100,
-                      width: double.maxFinite,
-                      child: TabBarView(
-                        controller: tabController,
-                        children: [
-                          ListView.builder(
-                            itemCount: 3,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                margin: EdgeInsets.only(right: 15, top: 10),
-                                width: 200,
-                                height: 300,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                  image: DecorationImage(
-                                    image: AssetImage("img/mountain.jpeg"),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              );
-                            },
+              itemBuilder: (_, index) {
+                return Container(
+                  margin: EdgeInsets.only(right: 20),
+                  child: Column(
+                    children: [
+                      Container(
+                       // margin: EdgeInsets.only(right: 50),
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          image: DecorationImage(
+                            image: AssetImage("img/${images.keys.elementAt(index)}"),
+                            fit: BoxFit.cover,
                           ),
-                          Center(child: AppText(text: "Inspiration Coming Soon")),
-                          Center(child: AppText(text: "Emotion Coming Soon")),
-                        ],
+                        ),
                       ),
-
-                    ),
-
-                  ],
+                      SizedBox(height: 5),
+                      Container(
+                        child: AppText(
+                          text: images.values.elementAt(index),
+                          color: AppColors.textColor2,
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
             ),
@@ -165,6 +169,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 }
 
+//golo golo dekhaune UI
 class CircleTabIndicator extends Decoration {
   final Color color;
   double radius;
